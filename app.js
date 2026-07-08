@@ -1,9 +1,8 @@
 console.log("APP JS TERBACA");
 
 
-const API_URL = 
-"https://script.google.com/macros/s/AKfycbxxYQX81DC6TLrAIuM0Zj5tzJxlZ8-e7-clC_ygv7LY6DzALFDXty1Xe3d3bM1U_q6J/exec";
-
+const API_URL =
+"https://script.google.com/macros/s/AKfycbygMf0ZrmYsVePR--4EktNHTKwLMBE0gDv5pw5mx0Q9BdnL3T86m3CLijpu2DCiSedB/exec";
 
 // ==============================
 // LOAD DASHBOARD
