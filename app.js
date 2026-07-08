@@ -7,6 +7,9 @@ const API_URL =
 
 
 
+// ==============================
+// LOAD DASHBOARD
+// ==============================
 
 async function loadDashboard(){
 
@@ -14,17 +17,18 @@ async function loadDashboard(){
     try{
 
 
+        console.log("LOAD DASHBOARD");
+
+
         const response = await fetch(
             `${API_URL}?action=getDashboard`
         );
 
 
-const result = await response.json();
-
-console.log("HASIL API:");
-console.log(result);
+        const result = await response.json();
 
 
+        console.log("HASIL API:");
         console.log(result);
 
 
@@ -36,12 +40,16 @@ console.log(result);
 
 
 
+            // TOTAL SALDO
+
             document.getElementById(
                 "totalSaldo"
             ).innerHTML =
             formatRupiah(data.totalSaldo);
 
 
+
+            // TOTAL INCOME
 
             document.getElementById(
                 "totalIncome"
@@ -50,6 +58,8 @@ console.log(result);
 
 
 
+            // TOTAL EXPENSE
+
             document.getElementById(
                 "totalExpense"
             ).innerHTML =
@@ -57,13 +67,23 @@ console.log(result);
 
 
 
-console.log("SALDO BANK:");
-console.log(data.saldoBank);
+            console.log("SALDO BANK:");
+            console.log(data.saldoBank);
 
 
-renderBanks(
-    data.saldoBank
-);
+
+            renderBanks(
+                data.saldoBank
+            );
+
+
+        } else {
+
+
+            console.log(
+                "API ERROR:",
+                result.message
+            );
 
 
         }
@@ -73,7 +93,10 @@ renderBanks(
     }catch(error){
 
 
-        console.log(error);
+        console.log(
+            "FETCH ERROR:",
+            error
+        );
 
 
     }
@@ -85,16 +108,18 @@ renderBanks(
 
 
 
+// ==============================
+// RENDER BANK
+// ==============================
+
 function renderBanks(data){
 
+
     console.log("MASUK RENDER BANK");
-    console.log(data);
 
 
-    let html="";
+    let html = "";
 
-
-    let html="";
 
 
     data.forEach(bank=>{
@@ -104,15 +129,19 @@ function renderBanks(data){
 
         <div class="bank-item">
 
-            🏦 ${bank.Bank}
 
-            <br>
+            <div>
+                🏦 ${bank.Bank}
+            </div>
 
-            <b>
-            ${formatRupiah(bank.Saldo)}
-            </b>
+
+            <strong>
+                ${formatRupiah(bank.Saldo)}
+            </strong>
+
 
         </div>
+
 
         `;
 
@@ -132,6 +161,10 @@ function renderBanks(data){
 
 
 
+// ==============================
+// FORMAT RUPIAH
+// ==============================
+
 function formatRupiah(number){
 
 
@@ -139,7 +172,8 @@ function formatRupiah(number){
         "id-ID",
         {
             style:"currency",
-            currency:"IDR"
+            currency:"IDR",
+            maximumFractionDigits:0
         }
 
     ).format(number);
@@ -150,5 +184,9 @@ function formatRupiah(number){
 
 
 
+
+// ==============================
+// START
+// ==============================
 
 loadDashboard();
