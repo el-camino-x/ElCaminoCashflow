@@ -2,9 +2,7 @@ console.log("APP JS TERBACA");
 
 
 const API_URL = 
-"https://script.google.com/macros/s/AKfycbz5Bt0QgKY0yIhOv3_3SKM8MogS4c4FdRXBklwl3YuXMAy7cBuoZDw8h1U6Iso37CsL/exec";
-
-
+"https://script.google.com/macros/s/AKfycbxxYQX81DC6TLrAIuM0Zj5tzJxlZ8-e7-clC_ygv7LY6DzALFDXty1Xe3d3bM1U_q6J/exec";
 
 
 // ==============================
@@ -25,7 +23,9 @@ async function loadDashboard(){
         );
 
 
-        const result = await response.json();
+        const text = await response.text();
+
+        const result = JSON.parse(text);
 
 
         console.log("HASIL API:");
