@@ -1,3 +1,6 @@
+console.log("APP JS TERBACA");
+
+
 const API_URL = 
 "https://script.google.com/macros/s/AKfycbz5Bt0QgKY0yIhOv3_3SKM8MogS4c4FdRXBklwl3YuXMAy7cBuoZDw8h1U6Iso37CsL/exec";
 
