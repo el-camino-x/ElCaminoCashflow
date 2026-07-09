@@ -2,7 +2,7 @@ console.log("APP JS TERBACA");
 
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbygMf0ZrmYsVePR--4EktNHTKwLMBE0gDv5pw5mx0Q9BdnL3T86m3CLijpu2DCiSedB/exec";
+"https://script.google.com/macros/s/AKfycbw2mF6o7wNDA9ZOR1kULysqfFiAD_jxTBY-PRRhsKNKgOYpRHwEir7a9MPcaI5K6Q-o/exec";
 
 
 
