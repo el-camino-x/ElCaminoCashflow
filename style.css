@@ -190,26 +190,59 @@ body{
 
 
 .bank-item,
-.transaction-item{
 
-    padding:15px;
-    border-bottom:1px solid #eee;
-
-}
 
 .transaction-item{
 
     display:flex;
     justify-content:space-between;
-    padding:12px;
-
-    border-bottom:1px solid #ddd;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
 
 }
 
 
-.transaction-item strong{
 
-    font-size:14px;
+.transaction-left{
 
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+}
+
+
+
+.transaction-icon{
+
+    font-size:22px;
+
+}
+
+
+
+.transaction-left small{
+
+    display:block;
+    color:#777;
+    margin-top:4px;
+
+}
+
+
+
+.income{
+
+    color:#16a34a;
+
+}
+
+
+
+.expense{
+
+    color:#dc2626;
+
+}
 }
