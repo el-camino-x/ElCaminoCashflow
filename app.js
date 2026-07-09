@@ -1,6 +1,6 @@
 console.log("APP JS TERBACA");
 
-const API_URL="https://script.google.com/macros/s/AKfycbynxaRiC5INruZ9CtAs4kTm1QiO5DuG_0j0jg9XGwtbdOMkfRuCSkNgCAhIv9Pow8k-/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbyxhUWHtg_Sm5G1A50mWchwoAsysKqw7aCXuT7uEe6ZMxwphIe5uTXfb_FPALXAJf52/exec";
 
 function loadDashboard(){
 const script=document.createElement("script");
@@ -183,6 +183,7 @@ document.getElementById("bankPage").style.display="none";
 document.getElementById("categoryPage").style.display="none";
 document.getElementById("incomePage").style.display="none";
 document.getElementById("expensePage").style.display="none";
+document.getElementById("transferPage").style.display="none";
 
 if(page==="dashboardPage"){
 document.getElementById("dashboardPage").style.display="block";
@@ -210,6 +211,12 @@ document.getElementById("expensePage").style.display="block";
 setDefaultExpenseDateTime();
 loadExpenseBanks();
 loadExpenseCategories();
+}
+
+if(page==="transferPage"){
+document.getElementById("transferPage").style.display="block";
+setDefaultTransferDateTime();
+loadTransferBanks();
 }
 
 }
@@ -620,6 +627,180 @@ expenseJam.value=now.toTimeString().substring(0,5);
 
 }
 
+function loadTransferBanks(){
+
+const script=document.createElement("script");
+
+script.src=`${API_URL}?action=getBanks&callback=handleTransferBanks`;
+
+document.body.appendChild(script);
+
+}
+
+
+function handleTransferBanks(result){
+
+console.log("TRANSFER BANK",result);
+
+
+if(result.success){
+
+
+let html="<option value=''>Pilih Bank</option>";
+
+
+result.data.forEach(bank=>{
+
+
+html+=`
+
+<option value="${bank.ID}">
+${bank.Bank}
+</option>
+
+`;
+
+});
+
+
+document.getElementById("transferDariBank").innerHTML=html;
+
+document.getElementById("transferKeBank").innerHTML=html;
+
+
+}
+
+}
+
+
+
+function setDefaultTransferDateTime(){
+
+
+const now=new Date();
+
+
+document.getElementById("transferTanggal").value =
+now.toISOString().split("T")[0];
+
+
+document.getElementById("transferJam").value =
+now.toTimeString().substring(0,5);
+
+
+}
+
+function saveTransfer(){
+
+let dari =
+document.getElementById("transferDariBank").value;
+
+let ke =
+document.getElementById("transferKeBank").value;
+
+let nominal =
+document.getElementById("transferNominal").value;
+
+let keterangan =
+document.getElementById("transferKeterangan").value.trim();
+
+
+if(dari===""){
+alert("Pilih bank asal");
+return;
+}
+
+if(ke===""){
+alert("Pilih bank tujuan");
+return;
+}
+
+if(dari===ke){
+alert("Bank asal dan tujuan tidak boleh sama");
+return;
+}
+
+if(nominal==="" || Number(nominal)<=0){
+alert("Nominal tidak valid");
+return;
+}
+
+if(keterangan===""){
+alert("Keterangan wajib diisi");
+return;
+}
+
+
+let data={
+
+tanggal:
+document.getElementById("transferTanggal").value,
+
+jam:
+document.getElementById("transferJam").value,
+
+dariBankID:dari,
+
+keBankID:ke,
+
+nominal:nominal,
+
+keterangan:keterangan
+
+};
+
+
+console.log("SAVE TRANSFER",data);
+
+
+
+const script=document.createElement("script");
+
+
+script.src=
+`${API_URL}?action=addTransfer`
++
+`&tanggal=${data.tanggal}`
++
+`&jam=${data.jam}`
++
+`&dariBankID=${data.dariBankID}`
++
+`&keBankID=${data.keBankID}`
++
+`&nominal=${data.nominal}`
++
+`&keterangan=${encodeURIComponent(data.keterangan)}`
++
+`&callback=handleSaveTransfer`;
+
+
+document.body.appendChild(script);
+
+
+}
+
+
+
+function handleSaveTransfer(result){
+
+console.log("TRANSFER RESULT",result);
+
+
+if(result.success){
+
+alert("Transfer berhasil");
+
+loadDashboard();
+
+loadTransactions();
+
+}
+
+}
+
+
+
 function formatRupiah(number){
 
 return new Intl.NumberFormat("id-ID",{
@@ -634,13 +815,22 @@ maximumFractionDigits:0
 
 }
 
-const incomeBtn=document.getElementById("saveIncomeBtn");
+document.addEventListener("DOMContentLoaded",()=>{
 
-const expenseBtn=document.getElementById("saveExpenseBtn");
+const incomeBtn = document.getElementById("saveIncomeBtn");
 
-console.log("INCOME BTN",incomeBtn);
+const expenseBtn = document.getElementById("saveExpenseBtn");
 
-console.log("EXPENSE BTN",expenseBtn);
+const transferBtn = document.getElementById("saveTransferBtn");
+
+
+console.log("INCOME BTN:", incomeBtn);
+
+console.log("EXPENSE BTN:", expenseBtn);
+
+console.log("TRANSFER BTN:", transferBtn);
+
+
 
 if(incomeBtn){
 
@@ -654,6 +844,8 @@ saveTransaction("Income");
 
 }
 
+
+
 if(expenseBtn){
 
 expenseBtn.onclick=function(){
@@ -666,6 +858,25 @@ saveTransaction("Expense");
 
 }
 
+
+
+if(transferBtn){
+
+transferBtn.onclick=function(){
+
+console.log("CLICK TRANSFER");
+
+saveTransfer();
+
+};
+
+}
+
+
+
 loadDashboard();
 
 loadTransactions();
+
+
+});
