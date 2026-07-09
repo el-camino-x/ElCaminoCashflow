@@ -2,8 +2,7 @@ console.log("APP JS TERBACA");
 
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbw2mF6o7wNDA9ZOR1kULysqfFiAD_jxTBY-PRRhsKNKgOYpRHwEir7a9MPcaI5K6Q-o/exec";
-
+"https://script.google.com/macros/s/AKfycbwcVVx3BsjlcoDA0xzOQIIW_fm3dfklTkxDgqDlMdR1INBGuVBqKqBlopaD24SWR1Oz/exec";
 
 
 // ==============================
@@ -37,7 +36,6 @@ function loadDashboard(){
 
 function loadTransactions(){
 
-
     console.log("LOAD TRANSACTIONS");
 
 
@@ -52,7 +50,6 @@ function loadTransactions(){
 
 
 }
-
 
 
 
@@ -196,8 +193,26 @@ function renderTransactions(data){
     let html = "";
 
 
-
     data.slice(0,5).forEach(trx=>{
+
+
+        const isIncome = trx.Jenis === "Income";
+
+
+        const typeClass = isIncome
+            ? "income"
+            : "expense";
+
+
+        const icon = isIncome
+            ? "🟢"
+            : "🔴";
+
+
+        const amount = isIncome
+            ? "+ " + formatRupiah(trx.Nominal)
+            : "- " + formatRupiah(trx.Nominal);
+
 
 
         html += `
@@ -206,27 +221,44 @@ function renderTransactions(data){
         <div class="transaction-item">
 
 
-            <div>
+            <div class="transaction-left">
 
 
-                <b>
-                ${trx.Jenis}
-                </b>
+                <div class="transaction-icon">
+
+                    ${icon}
+
+                </div>
 
 
-                <br>
+
+                <div>
 
 
-                <small>
-                ${trx.Tanggal}
-                ${trx.Jam}
-                </small>
+                    <b>
+                        ${trx.Keterangan}
+                    </b>
 
 
-                <br>
+                    <small>
+
+                        ${trx.Bank}
+                        •
+                        ${trx.Category}
+
+                    </small>
 
 
-                ${trx.Keterangan}
+                    <small>
+
+                        ${trx.Tanggal}
+                        |
+                        ${trx.Jam}
+
+                    </small>
+
+
+                </div>
 
 
             </div>
@@ -234,9 +266,10 @@ function renderTransactions(data){
 
 
 
-            <strong>
 
-            ${formatRupiah(trx.Nominal)}
+            <strong class="${typeClass}">
+
+                ${amount}
 
             </strong>
 
@@ -246,6 +279,7 @@ function renderTransactions(data){
 
 
         `;
+
 
 
     });
@@ -283,7 +317,183 @@ function formatRupiah(number){
 
 }
 
+function showPage(page){
 
+
+    const dashboard =
+    document.getElementById("dashboardPage");
+
+
+    const bank =
+    document.getElementById("bankPage");
+
+
+
+    if(page === "bankPage"){
+
+
+        dashboard.style.display="none";
+
+
+        bank.style.display="block";
+
+
+        loadBanks();
+
+
+    }
+
+
+
+
+    if(page === "dashboardPage"){
+
+
+        dashboard.style.display="block";
+
+
+        bank.style.display="none";
+
+
+    }
+
+
+}
+
+function loadBanks(){
+
+
+    const script = document.createElement("script");
+
+
+    script.src =
+    `${API_URL}?action=getBanks&callback=handleBanks`;
+
+
+    document.body.appendChild(script);
+
+
+}
+
+
+
+function handleBanks(result){
+
+
+    console.log("BANK DATA");
+    console.log(result);
+
+
+
+    if(result.success){
+
+
+        renderBankPage(
+            result.data
+        );
+
+
+    }
+
+
+}
+
+
+
+function renderBankPage(data){
+
+
+    let html="";
+
+
+    data.forEach(bank=>{
+
+
+        html += `
+
+
+        <div class="bank-item"
+        onclick="openBankDetail(${bank.ID})">
+
+
+            <b>
+                🏦 ${bank.Bank}
+            </b>
+
+
+            <br>
+
+
+            ${bank["Nama Pemilik"]}
+
+
+            <br>
+
+
+            Rekening:
+            ${bank["No Rekening"]}
+
+
+            <br>
+
+
+            <button>
+                Lihat Detail
+            </button>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+    document.getElementById(
+        "bankPageList"
+    ).innerHTML = html;
+
+
+}
+
+function openBankDetail(id){
+
+
+    console.log(
+        "OPEN BANK DETAIL",
+        id
+    );
+
+
+    const script =
+    document.createElement("script");
+
+
+    script.src =
+    `${API_URL}?action=getBankDetail&id=${id}&callback=handleBankDetail`;
+
+
+    document.body.appendChild(script);
+
+
+}
+
+
+
+
+function handleBankDetail(result){
+
+
+    console.log(
+        "BANK DETAIL",
+        result
+    );
+
+
+}
 
 
 // START
