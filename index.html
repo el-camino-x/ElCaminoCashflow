@@ -36,12 +36,13 @@
             </a>
 
 
+
             <div class="menu-title">
                 MASTER
             </div>
 
 
-            <a>
+            <a onclick="showPage('bankPage')">
                 🏦 Bank
             </a>
 
@@ -92,9 +93,11 @@
 
 
 
+
     <!-- MAIN -->
 
     <main class="main">
+
 
 
         <header class="header">
@@ -115,42 +118,163 @@
 
 
 
-        <!-- SUMMARY -->
 
-        <section class="cards">
+        <!-- DASHBOARD AREA -->
 
-
-            <div class="card">
-
-                <p>Total Saldo</p>
-
-                <h2 id="totalSaldo">
-                    Rp 0
-                </h2>
-
-            </div>
+        <div id="dashboardPage">
 
 
 
-            <div class="card">
+            <!-- SUMMARY -->
 
-                <p>Total Income</p>
-
-                <h2 id="totalIncome">
-                    Rp 0
-                </h2>
-
-            </div>
+            <section class="cards" id="dashboardCards">
 
 
+                <div class="card">
 
-            <div class="card">
+                    <p>
+                        Total Saldo
+                    </p>
 
-                <p>Total Expense</p>
 
-                <h2 id="totalExpense">
-                    Rp 0
-                </h2>
+                    <h2 id="totalSaldo">
+                        Rp 0
+                    </h2>
+
+                </div>
+
+
+
+
+                <div class="card">
+
+                    <p>
+                        Total Income
+                    </p>
+
+
+                    <h2 id="totalIncome">
+                        Rp 0
+                    </h2>
+
+                </div>
+
+
+
+
+
+                <div class="card">
+
+                    <p>
+                        Total Expense
+                    </p>
+
+
+                    <h2 id="totalExpense">
+                        Rp 0
+                    </h2>
+
+                </div>
+
+
+            </section>
+
+
+
+
+
+
+
+
+            <!-- CONTENT -->
+
+            <section class="grid" id="dashboardGrid">
+
+
+
+                <div class="panel">
+
+
+                    <h3>
+                        Saldo Bank
+                    </h3>
+
+
+
+                    <div id="bankList">
+
+                        Loading...
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+
+                <div class="panel">
+
+
+                    <h3>
+                        Recent Transaction
+                    </h3>
+
+
+
+                    <div id="transactionList">
+
+                        Loading...
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </section>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+        <!-- BANK PAGE -->
+
+        <section id="bankPage" style="display:none;">
+
+
+
+            <div class="panel">
+
+
+
+                <h3>
+                    Bank
+                </h3>
+
+
+
+                <div id="bankPageList">
+
+                    Loading...
+
+                </div>
+
+
 
             </div>
 
@@ -160,54 +284,6 @@
 
 
 
-
-
-        <!-- CONTENT -->
-
-        <section class="grid">
-
-
-
-            <div class="panel">
-
-
-                <h3>
-                    Saldo Bank
-                </h3>
-
-
-                <div id="bankList">
-
-                    Loading...
-
-                </div>
-
-
-            </div>
-
-
-
-
-            <div class="panel">
-
-
-                <h3>
-                    Recent Transaction
-                </h3>
-
-
-                <div id="transactionList">
-
-                    Loading...
-
-                </div>
-
-
-            </div>
-
-
-
-        </section>
 
 
 
@@ -215,7 +291,9 @@
 
 
 
+
 </div>
+
 
 
 
