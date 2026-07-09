@@ -19,7 +19,9 @@
 <div class="layout">
 
 
+
     <!-- SIDEBAR -->
+
     <aside class="sidebar">
 
 
@@ -31,7 +33,7 @@
         <nav>
 
 
-            <a class="active">
+            <a onclick="showPage('dashboardPage')" class="active">
                 🏠 Dashboard
             </a>
 
@@ -50,6 +52,7 @@
             <a>
                 📂 Category
             </a>
+
 
 
 
@@ -75,6 +78,8 @@
 
 
 
+
+
             <div class="menu-title">
                 REPORT
             </div>
@@ -85,10 +90,15 @@
             </a>
 
 
+
         </nav>
 
 
     </aside>
+
+
+
+
 
 
 
@@ -102,9 +112,11 @@
 
         <header class="header">
 
+
             <h1>
                 Dashboard
             </h1>
+
 
 
             <div class="profile">
@@ -119,7 +131,13 @@
 
 
 
-        <!-- DASHBOARD AREA -->
+
+
+
+        <!-- ========================= -->
+        <!-- DASHBOARD PAGE -->
+        <!-- ========================= -->
+
 
         <div id="dashboardPage">
 
@@ -127,10 +145,13 @@
 
             <!-- SUMMARY -->
 
+
             <section class="cards" id="dashboardCards">
 
 
+
                 <div class="card">
+
 
                     <p>
                         Total Saldo
@@ -141,12 +162,15 @@
                         Rp 0
                     </h2>
 
+
                 </div>
 
 
 
 
+
                 <div class="card">
+
 
                     <p>
                         Total Income
@@ -157,6 +181,7 @@
                         Rp 0
                     </h2>
 
+
                 </div>
 
 
@@ -164,6 +189,7 @@
 
 
                 <div class="card">
+
 
                     <p>
                         Total Expense
@@ -174,7 +200,9 @@
                         Rp 0
                     </h2>
 
+
                 </div>
+
 
 
             </section>
@@ -185,8 +213,8 @@
 
 
 
-
             <!-- CONTENT -->
+
 
             <section class="grid" id="dashboardGrid">
 
@@ -198,7 +226,6 @@
                     <h3>
                         Saldo Bank
                     </h3>
-
 
 
                     <div id="bankList">
@@ -216,13 +243,13 @@
 
 
 
+
                 <div class="panel">
 
 
                     <h3>
                         Recent Transaction
                     </h3>
-
 
 
                     <div id="transactionList">
@@ -234,6 +261,7 @@
 
 
                 </div>
+
 
 
 
@@ -252,14 +280,19 @@
 
 
 
+
+
+
+        <!-- ========================= -->
         <!-- BANK PAGE -->
+        <!-- ========================= -->
+
 
         <section id="bankPage" style="display:none;">
 
 
 
             <div class="panel">
-
 
 
                 <h3>
@@ -287,12 +320,97 @@
 
 
 
+
+
+
+
+
+
+
+        <!-- ========================= -->
+        <!-- BANK DETAIL PAGE -->
+        <!-- ========================= -->
+
+
+        <section id="bankDetailPage" style="display:none;">
+
+
+
+            <div class="panel">
+
+
+
+                <h3 id="detailBankName">
+
+                    Bank Detail
+
+                </h3>
+
+
+
+
+                <div id="detailBankInfo">
+
+                    Loading...
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="panel">
+
+
+
+                <h3>
+
+                    Transaction History
+
+                </h3>
+
+
+
+                <div id="detailTransactionList">
+
+                    Loading...
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+        </section>
+
+
+
+
+
+
+
+
+
     </main>
 
 
 
-
 </div>
+
+
 
 
 
