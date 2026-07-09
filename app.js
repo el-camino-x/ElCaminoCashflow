@@ -450,25 +450,114 @@ document.getElementById("expenseCategory").innerHTML=html;
 
 function saveTransaction(type){
 
+let bank =
+type==="Income"
+?
+incomeBank.value
+:
+expenseBank.value;
+
+
+let category =
+type==="Income"
+?
+incomeCategory.value
+:
+expenseCategory.value;
+
+
+let nominal =
+type==="Income"
+?
+incomeNominal.value
+:
+expenseNominal.value;
+
+
+let keterangan =
+type==="Income"
+?
+incomeKeterangan.value.trim()
+:
+expenseKeterangan.value.trim();
+
+
+
+if(bank===""){
+
+alert("Pilih Bank terlebih dahulu");
+
+return;
+
+}
+
+
+if(category===""){
+
+alert("Pilih Category terlebih dahulu");
+
+return;
+
+}
+
+
+if(nominal==="" || Number(nominal)<=0){
+
+alert("Masukkan nominal yang benar");
+
+return;
+
+}
+
+
+if(keterangan===""){
+
+alert("Keterangan wajib diisi");
+
+return;
+
+}
+
+
+
 let data={
 
-tanggal:type==="Income"?incomeTanggal.value:expenseTanggal.value,
+tanggal:
+type==="Income"
+?
+incomeTanggal.value
+:
+expenseTanggal.value,
 
-jam:type==="Income"?incomeJam.value:expenseJam.value,
+
+jam:
+type==="Income"
+?
+incomeJam.value
+:
+expenseJam.value,
+
 
 jenis:type,
 
-bankID:type==="Income"?incomeBank.value:expenseBank.value,
 
-categoryID:type==="Income"?incomeCategory.value:expenseCategory.value,
+bankID:bank,
 
-nominal:type==="Income"?incomeNominal.value:expenseNominal.value,
 
-keterangan:type==="Income"?incomeKeterangan.value:expenseKeterangan.value
+categoryID:category,
+
+
+nominal:nominal,
+
+
+keterangan:keterangan
 
 };
 
+
 console.log("SAVE DATA",data);
+
+
 
 const script=document.createElement("script");
 
