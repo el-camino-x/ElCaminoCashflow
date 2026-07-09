@@ -1,8 +1,11 @@
 console.log("APP JS TERBACA");
 
 
+
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwcVVx3BsjlcoDA0xzOQIIW_fm3dfklTkxDgqDlMdR1INBGuVBqKqBlopaD24SWR1Oz/exec";
+"https://script.google.com/macros/s/AKfycbyfHPRLAbsk5JqwW7G_zasV-1tsJoCfFzHxIY7tFKxOforS1xtTCEgTKwLhpiTikb6a/exec";
+
+
 
 
 // ==============================
@@ -15,31 +18,36 @@ function loadDashboard(){
     console.log("LOAD DASHBOARD");
 
 
-    const script = document.createElement("script");
+    const script =
+    document.createElement("script");
 
 
     script.src =
     `${API_URL}?action=getDashboard&callback=handleDashboard`;
 
 
-
     document.body.appendChild(script);
-
 
 
 }
 
 
+
+
+
 // ==============================
-// LOAD TRANSACTIONS
+// LOAD TRANSACTION
 // ==============================
 
+
 function loadTransactions(){
+
 
     console.log("LOAD TRANSACTIONS");
 
 
-    const script = document.createElement("script");
+    const script =
+    document.createElement("script");
 
 
     script.src =
@@ -53,11 +61,20 @@ function loadTransactions(){
 
 
 
+
+
+// ==============================
+// HANDLE TRANSACTION
+// ==============================
+
+
 function handleTransactions(result){
 
 
-    console.log("TRANSACTIONS:");
-    console.log(result);
+    console.log(
+        "TRANSACTIONS:",
+        result
+    );
 
 
 
@@ -77,50 +94,56 @@ function handleTransactions(result){
 
 
 
+
+
 // ==============================
-// CALLBACK DARI APPSCRIPT
+// HANDLE DASHBOARD
 // ==============================
+
 
 function handleDashboard(result){
 
 
-    console.log("HASIL API:");
-    console.log(result);
+    console.log(
+        "HASIL DASHBOARD:",
+        result
+    );
 
 
 
     if(result.success){
 
 
-        const data = result.data;
+        const data =
+        result.data;
 
 
 
         document.getElementById(
             "totalSaldo"
         ).innerHTML =
-        formatRupiah(data.totalSaldo);
+        formatRupiah(
+            data.totalSaldo
+        );
 
 
 
         document.getElementById(
             "totalIncome"
         ).innerHTML =
-        formatRupiah(data.totalIncome);
+        formatRupiah(
+            data.totalIncome
+        );
 
 
 
         document.getElementById(
             "totalExpense"
         ).innerHTML =
-        formatRupiah(data.totalExpense);
-
-
-
-        console.log(
-            "SALDO BANK:",
-            data.saldoBank
+        formatRupiah(
+            data.totalExpense
         );
+
 
 
         renderBanks(
@@ -138,17 +161,17 @@ function handleDashboard(result){
 
 
 
+
+
 // ==============================
-// RENDER BANK
+// RENDER DASHBOARD BANK
 // ==============================
+
 
 function renderBanks(data){
 
 
-    console.log("MASUK RENDER BANK");
-
-
-    let html = "";
+    let html="";
 
 
 
@@ -156,6 +179,7 @@ function renderBanks(data){
 
 
         html += `
+
 
         <div class="bank-item">
 
@@ -166,11 +190,14 @@ function renderBanks(data){
 
 
             <strong>
+
                 ${formatRupiah(bank.Saldo)}
+
             </strong>
 
 
         </div>
+
 
         `;
 
@@ -179,39 +206,55 @@ function renderBanks(data){
 
 
 
+
     document.getElementById(
         "bankList"
     ).innerHTML = html;
 
 
-
 }
+
+
+
+
+
+
+
+
+
+// ==============================
+// RENDER RECENT TRANSACTION
+// ==============================
+
 
 function renderTransactions(data){
 
 
-    let html = "";
+    let html="";
 
 
-    data.slice(0,5).forEach(trx=>{
+
+    data.slice(0,5)
+    .forEach(trx=>{
 
 
-        const isIncome = trx.Jenis === "Income";
+        const income =
+        trx.Jenis === "Income";
 
 
-        const typeClass = isIncome
-            ? "income"
-            : "expense";
+
+        const icon =
+        income ? "🟢" : "🔴";
 
 
-        const icon = isIncome
-            ? "🟢"
-            : "🔴";
 
+        const amount =
+        income
+        ?
+        "+ " + formatRupiah(trx.Nominal)
+        :
+        "- " + formatRupiah(trx.Nominal);
 
-        const amount = isIncome
-            ? "+ " + formatRupiah(trx.Nominal)
-            : "- " + formatRupiah(trx.Nominal);
 
 
 
@@ -232,6 +275,7 @@ function renderTransactions(data){
 
 
 
+
                 <div>
 
 
@@ -240,13 +284,20 @@ function renderTransactions(data){
                     </b>
 
 
+                    <br>
+
+
                     <small>
 
                         ${trx.Bank}
-                        •
+                        -
                         ${trx.Category}
 
                     </small>
+
+
+
+                    <br>
 
 
                     <small>
@@ -258,6 +309,7 @@ function renderTransactions(data){
                     </small>
 
 
+
                 </div>
 
 
@@ -267,7 +319,7 @@ function renderTransactions(data){
 
 
 
-            <strong class="${typeClass}">
+            <strong>
 
                 ${amount}
 
@@ -286,6 +338,8 @@ function renderTransactions(data){
 
 
 
+
+
     document.getElementById(
         "transactionList"
     ).innerHTML = html;
@@ -297,91 +351,144 @@ function renderTransactions(data){
 
 
 
+
+
+
+
+
 // ==============================
-// FORMAT RUPIAH
+// PAGE ROUTER
 // ==============================
 
-function formatRupiah(number){
-
-
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            style:"currency",
-            currency:"IDR",
-            maximumFractionDigits:0
-        }
-
-    ).format(number);
-
-
-}
 
 function showPage(page){
 
 
-    const dashboard =
-    document.getElementById("dashboardPage");
 
-
-    const bank =
-    document.getElementById("bankPage");
+    document.getElementById(
+        "dashboardPage"
+    ).style.display="none";
 
 
 
-    if(page === "bankPage"){
+    document.getElementById(
+        "bankPage"
+    ).style.display="none";
 
 
-        dashboard.style.display="none";
+
+    document.getElementById(
+        "bankDetailPage"
+    ).style.display="none";
 
 
-        bank.style.display="block";
+
+
+
+
+
+    if(page==="dashboardPage"){
+
+
+        document.getElementById(
+            "dashboardPage"
+        ).style.display="block";
+
+
+    }
+
+
+
+
+
+
+    if(page==="bankPage"){
+
+
+        document.getElementById(
+            "bankPage"
+        ).style.display="block";
 
 
         loadBanks();
 
 
+
+    }
+
+
+
+
+
+
+    if(page==="bankDetailPage"){
+
+
+        document.getElementById(
+            "bankDetailPage"
+        ).style.display="block";
+
+
     }
 
 
 
-
-    if(page === "dashboardPage"){
-
-
-        dashboard.style.display="block";
-
-
-        bank.style.display="none";
-
-
-    }
 
 
 }
 
+
+
+
+
+
+
+
+
+// ==============================
+// LOAD BANK PAGE
+// ==============================
+
+
 function loadBanks(){
 
 
-    const script = document.createElement("script");
+
+    const script =
+    document.createElement("script");
+
 
 
     script.src =
     `${API_URL}?action=getBanks&callback=handleBanks`;
 
 
+
     document.body.appendChild(script);
+
 
 
 }
 
 
 
+
+
+
+
+// ==============================
+// HANDLE BANK PAGE
+// ==============================
+
+
 function handleBanks(result){
 
 
-    console.log("BANK DATA");
-    console.log(result);
+
+    console.log(
+        "BANK DATA",
+        result
+    );
 
 
 
@@ -400,10 +507,22 @@ function handleBanks(result){
 
 
 
+
+
+
+
+
+// ==============================
+// RENDER BANK PAGE
+// ==============================
+
+
 function renderBankPage(data){
 
 
+
     let html="";
+
 
 
     data.forEach(bank=>{
@@ -416,9 +535,13 @@ function renderBankPage(data){
         onclick="openBankDetail(${bank.ID})">
 
 
+
             <b>
+
                 🏦 ${bank.Bank}
+
             </b>
+
 
 
             <br>
@@ -427,22 +550,29 @@ function renderBankPage(data){
             ${bank["Nama Pemilik"]}
 
 
+
             <br>
 
 
             Rekening:
+
             ${bank["No Rekening"]}
 
 
-            <br>
+
+            <br><br>
 
 
             <button>
+
                 Lihat Detail
+
             </button>
 
 
+
         </div>
+
 
 
         `;
@@ -452,14 +582,30 @@ function renderBankPage(data){
 
 
 
+
     document.getElementById(
         "bankPageList"
     ).innerHTML = html;
 
 
+
 }
 
+
+
+
+
+
+
+
+
+// ==============================
+// OPEN BANK DETAIL
+// ==============================
+
+
 function openBankDetail(id){
+
 
 
     console.log(
@@ -468,15 +614,19 @@ function openBankDetail(id){
     );
 
 
+
     const script =
     document.createElement("script");
+
 
 
     script.src =
     `${API_URL}?action=getBankDetail&id=${id}&callback=handleBankDetail`;
 
 
+
     document.body.appendChild(script);
+
 
 
 }
@@ -484,7 +634,19 @@ function openBankDetail(id){
 
 
 
+
+
+
+
+
+
+// ==============================
+// HANDLE BANK DETAIL
+// ==============================
+
+
 function handleBankDetail(result){
+
 
 
     console.log(
@@ -493,10 +655,230 @@ function handleBankDetail(result){
     );
 
 
+
+    if(result.success){
+
+
+        showPage(
+            "bankDetailPage"
+        );
+
+
+
+        renderBankDetail(
+            result.data
+        );
+
+
+
+    }
+
+
+
 }
 
 
+
+
+
+
+
+
+
+// ==============================
+// RENDER BANK DETAIL
+// ==============================
+
+
+function renderBankDetail(data){
+
+
+
+    document.getElementById(
+        "detailBankName"
+    ).innerHTML =
+
+    `
+    🏦 ${data.bank.Nama}
+    `;
+
+
+
+
+
+
+    document.getElementById(
+        "detailBankInfo"
+    ).innerHTML =
+
+
+    `
+
+    <p>
+    Pemilik:
+    ${data.bank.Pemilik}
+    </p>
+
+
+    <p>
+    Rekening:
+    ${data.bank.Rekening}
+    </p>
+
+
+    <h2>
+
+    Saldo:
+    ${formatRupiah(data.saldo)}
+
+    </h2>
+
+
+    `;
+
+
+
+
+
+
+    let html="";
+
+
+
+    data.transactions.forEach(trx=>{
+
+
+        const income =
+        trx.Jenis==="Income";
+
+
+
+        html += `
+
+
+        <div class="transaction-item">
+
+
+
+            <div>
+
+
+                <b>
+
+                ${trx.Jenis}
+
+                </b>
+
+
+                <br>
+
+
+                ${trx.Keterangan}
+
+
+
+                <br>
+
+
+                <small>
+
+                ${trx.Tanggal}
+                |
+                ${trx.Jam}
+
+                </small>
+
+
+
+            </div>
+
+
+
+
+            <strong>
+
+
+            ${
+                income
+                ?
+                "+ "
+                :
+                "- "
+            }
+
+
+            ${formatRupiah(trx.Nominal)}
+
+
+
+            </strong>
+
+
+
+        </div>
+
+
+        `;
+
+
+
+    });
+
+
+
+
+    document.getElementById(
+        "detailTransactionList"
+    ).innerHTML = html;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==============================
+// FORMAT RUPIAH
+// ==============================
+
+
+function formatRupiah(number){
+
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+
+            style:"currency",
+
+            currency:"IDR",
+
+            maximumFractionDigits:0
+
+        }
+
+    ).format(number);
+
+
+}
+
+
+
+
+
+
+
+// ==============================
 // START
+// ==============================
+
 
 loadDashboard();
+
 loadTransactions();
