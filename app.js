@@ -1,6 +1,6 @@
 console.log("APP JS TERBACA");
 
-const API_URL="https://script.google.com/macros/s/AKfycbyaE37KIogtOc54wq1LMUUVu4qtrOXozwL0JvzYcAotVfIdgsoS2Ra4nzqz_jPN7ith/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbyfi2B5hJxnj5HZEB1rlTTYbsglGAqEPWPaSLU-LH78XG8HeyYus__VZr3WnvOefs4/exec";
 
 function loadDashboard(){
 const script=document.createElement("script");
@@ -528,33 +528,37 @@ maximumFractionDigits:0
 
 document.addEventListener("DOMContentLoaded",()=>{
 
-const incomeBtn=document.getElementById("saveIncomeBtn");
+const incomeBtn = document.getElementById("saveIncomeBtn");
+const expenseBtn = document.getElementById("saveExpenseBtn");
 
-const expenseBtn=document.getElementById("saveExpenseBtn");
+
+console.log("INCOME BTN:", incomeBtn);
+console.log("EXPENSE BTN:", expenseBtn);
 
 
 if(incomeBtn){
 
-incomeBtn.onclick=()=>{
+    incomeBtn.onclick = function(){
 
-console.log("CLICK INCOME");
+        console.log("CLICK INCOME");
 
-saveTransaction("Income");
+        saveTransaction("Income");
 
-};
+    };
 
 }
 
 
+
 if(expenseBtn){
 
-expenseBtn.onclick=()=>{
+    expenseBtn.onclick = function(){
 
-console.log("CLICK EXPENSE");
+        console.log("CLICK EXPENSE");
 
-saveTransaction("Expense");
+        saveTransaction("Expense");
 
-};
+    };
 
 }
 
@@ -564,3 +568,4 @@ loadDashboard();
 loadTransactions();
 
 });
+
