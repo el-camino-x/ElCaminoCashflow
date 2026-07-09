@@ -31,6 +31,54 @@ function loadDashboard(){
 }
 
 
+// ==============================
+// LOAD TRANSACTIONS
+// ==============================
+
+function loadTransactions(){
+
+
+    console.log("LOAD TRANSACTIONS");
+
+
+    const script = document.createElement("script");
+
+
+    script.src =
+    `${API_URL}?action=getTransactions&callback=handleTransactions`;
+
+
+    document.body.appendChild(script);
+
+
+}
+
+
+
+
+function handleTransactions(result){
+
+
+    console.log("TRANSACTIONS:");
+    console.log(result);
+
+
+
+    if(result.success){
+
+
+        renderTransactions(
+            result.data
+        );
+
+
+    }
+
+
+}
+
+
+
 
 // ==============================
 // CALLBACK DARI APPSCRIPT
@@ -142,7 +190,75 @@ function renderBanks(data){
 
 }
 
+function renderTransactions(data){
 
+
+    let html = "";
+
+
+
+    data.slice(0,5).forEach(trx=>{
+
+
+        html += `
+
+
+        <div class="transaction-item">
+
+
+            <div>
+
+
+                <b>
+                ${trx.Jenis}
+                </b>
+
+
+                <br>
+
+
+                <small>
+                ${trx.Tanggal}
+                ${trx.Jam}
+                </small>
+
+
+                <br>
+
+
+                ${trx.Keterangan}
+
+
+            </div>
+
+
+
+
+            <strong>
+
+            ${formatRupiah(trx.Nominal)}
+
+            </strong>
+
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+    document.getElementById(
+        "transactionList"
+    ).innerHTML = html;
+
+
+
+}
 
 
 
@@ -173,3 +289,4 @@ function formatRupiah(number){
 // START
 
 loadDashboard();
+loadTransactions();
