@@ -196,3 +196,20 @@ body{
     border-bottom:1px solid #eee;
 
 }
+
+.transaction-item{
+
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+
+.transaction-item strong{
+
+    font-size:14px;
+
+}
