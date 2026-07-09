@@ -4,97 +4,82 @@ console.log("APP JS TERBACA");
 const API_URL =
 "https://script.google.com/macros/s/AKfycbygMf0ZrmYsVePR--4EktNHTKwLMBE0gDv5pw5mx0Q9BdnL3T86m3CLijpu2DCiSedB/exec";
 
+
+
 // ==============================
 // LOAD DASHBOARD
 // ==============================
 
-async function loadDashboard(){
+function loadDashboard(){
 
 
-    try{
+    console.log("LOAD DASHBOARD");
 
 
-        console.log("LOAD DASHBOARD");
+    const script = document.createElement("script");
 
 
-        const response = await fetch(
-            `${API_URL}?action=getDashboard`
-        );
-
-
-        const text = await response.text();
-
-        const result = JSON.parse(text);
-
-
-        console.log("HASIL API:");
-        console.log(result);
+    script.src =
+    `${API_URL}?action=getDashboard&callback=handleDashboard`;
 
 
 
-        if(result.success){
-
-
-            const data = result.data;
+    document.body.appendChild(script);
 
 
 
-            // TOTAL SALDO
-
-            document.getElementById(
-                "totalSaldo"
-            ).innerHTML =
-            formatRupiah(data.totalSaldo);
+}
 
 
 
-            // TOTAL INCOME
+// ==============================
+// CALLBACK DARI APPSCRIPT
+// ==============================
 
-            document.getElementById(
-                "totalIncome"
-            ).innerHTML =
-            formatRupiah(data.totalIncome);
-
+function handleDashboard(result){
 
 
-            // TOTAL EXPENSE
-
-            document.getElementById(
-                "totalExpense"
-            ).innerHTML =
-            formatRupiah(data.totalExpense);
+    console.log("HASIL API:");
+    console.log(result);
 
 
 
-            console.log("SALDO BANK:");
-            console.log(data.saldoBank);
+    if(result.success){
+
+
+        const data = result.data;
 
 
 
-            renderBanks(
-                data.saldoBank
-            );
-
-
-        } else {
-
-
-            console.log(
-                "API ERROR:",
-                result.message
-            );
-
-
-        }
+        document.getElementById(
+            "totalSaldo"
+        ).innerHTML =
+        formatRupiah(data.totalSaldo);
 
 
 
-    }catch(error){
+        document.getElementById(
+            "totalIncome"
+        ).innerHTML =
+        formatRupiah(data.totalIncome);
+
+
+
+        document.getElementById(
+            "totalExpense"
+        ).innerHTML =
+        formatRupiah(data.totalExpense);
+
 
 
         console.log(
-            "FETCH ERROR:",
-            error
+            "SALDO BANK:",
+            data.saldoBank
+        );
+
+
+        renderBanks(
+            data.saldoBank
         );
 
 
@@ -102,6 +87,7 @@ async function loadDashboard(){
 
 
 }
+
 
 
 
@@ -141,7 +127,6 @@ function renderBanks(data){
 
         </div>
 
-
         `;
 
 
@@ -154,7 +139,9 @@ function renderBanks(data){
     ).innerHTML = html;
 
 
+
 }
+
 
 
 
@@ -183,9 +170,6 @@ function formatRupiah(number){
 
 
 
-
-// ==============================
 // START
-// ==============================
 
 loadDashboard();
