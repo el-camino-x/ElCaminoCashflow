@@ -3,12 +3,12 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Finance Panel</title>
+<title>Finance Panel</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -20,81 +20,81 @@
 
 
 
-    <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
 
-        <div class="logo">
-            💰 FINANCE
-        </div>
+<div class="logo">
+💰 FINANCE
+</div>
 
 
-        <nav>
+<nav>
 
 
-            <a onclick="showPage('dashboardPage')" class="active">
-                🏠 Dashboard
-            </a>
+<a onclick="showPage('dashboardPage')" class="active">
+🏠 Dashboard
+</a>
 
 
 
-            <div class="menu-title">
-                MASTER
-            </div>
+<div class="menu-title">
+MASTER
+</div>
 
 
-            <a onclick="showPage('bankPage')">
-                🏦 Bank
-            </a>
+<a onclick="showPage('bankPage')">
+🏦 Bank
+</a>
 
 
-            <a>
-                📂 Category
-            </a>
+<a onclick="showPage('categoryPage')">
+📂 Category
+</a>
 
 
 
 
-            <div class="menu-title">
-                TRANSACTION
-            </div>
+<div class="menu-title">
+TRANSACTION
+</div>
 
 
-            <a>
-                💵 Income
-            </a>
+<a onclick="showPage('incomePage')">
+💵 Income
+</a>
 
 
-            <a>
-                💸 Expense
-            </a>
+<a onclick="showPage('expensePage')">
+💸 Expense
+</a>
 
 
+<a>
+🔄 Transfer
+</a>
 
-            <a>
-                🔄 Transfer
-            </a>
 
 
 
+<div class="menu-title">
+REPORT
+</div>
 
 
-            <div class="menu-title">
-                REPORT
-            </div>
+<a>
+📊 Report
+</a>
 
 
-            <a>
-                📊 Report
-            </a>
 
+</nav>
 
 
-        </nav>
+</aside>
 
 
-    </aside>
 
 
 
@@ -102,141 +102,141 @@
 
 
 
+<!-- MAIN -->
 
+<main class="main">
 
-    <!-- MAIN -->
 
-    <main class="main">
 
+<header class="header">
 
+<h1>
+Finance Panel
+</h1>
 
-        <header class="header">
 
+<div class="profile">
+NICKY
+</div>
 
-            <h1>
-                Dashboard
-            </h1>
 
+</header>
 
 
-            <div class="profile">
-                NICKY
-            </div>
 
 
-        </header>
 
 
 
 
 
+<!-- DASHBOARD -->
 
 
+<section id="dashboardPage">
 
 
-        <!-- ========================= -->
-        <!-- DASHBOARD PAGE -->
-        <!-- ========================= -->
 
+<section class="cards">
 
-        <div id="dashboardPage">
 
 
+<div class="card">
 
-            <!-- SUMMARY -->
+<p>Total Saldo</p>
 
+<h2 id="totalSaldo">
+Rp 0
+</h2>
 
-            <section class="cards" id="dashboardCards">
 
+</div>
 
 
-                <div class="card">
 
 
-                    <p>
-                        Total Saldo
-                    </p>
+<div class="card">
 
+<p>Total Income</p>
 
-                    <h2 id="totalSaldo">
-                        Rp 0
-                    </h2>
+<h2 id="totalIncome">
+Rp 0
+</h2>
 
 
-                </div>
+</div>
 
 
 
 
+<div class="card">
 
-                <div class="card">
+<p>Total Expense</p>
 
+<h2 id="totalExpense">
+Rp 0
+</h2>
 
-                    <p>
-                        Total Income
-                    </p>
 
+</div>
 
-                    <h2 id="totalIncome">
-                        Rp 0
-                    </h2>
 
 
-                </div>
+</section>
 
 
 
 
 
-                <div class="card">
 
+<section class="grid">
 
-                    <p>
-                        Total Expense
-                    </p>
 
+<div class="panel">
 
-                    <h2 id="totalExpense">
-                        Rp 0
-                    </h2>
 
+<h3>
+Saldo Bank
+</h3>
 
-                </div>
 
+<div id="bankList">
 
+Loading...
 
-            </section>
+</div>
 
 
+</div>
 
 
 
 
 
-            <!-- CONTENT -->
+<div class="panel">
 
 
-            <section class="grid" id="dashboardGrid">
+<h3>
+Recent Transaction
+</h3>
 
 
+<div id="transactionList">
 
-                <div class="panel">
+Loading...
 
+</div>
 
-                    <h3>
-                        Saldo Bank
-                    </h3>
 
+</div>
 
-                    <div id="bankList">
 
-                        Loading...
 
-                    </div>
+</section>
 
 
 
-                </div>
+</section>
 
 
 
@@ -244,32 +244,33 @@
 
 
 
-                <div class="panel">
 
 
-                    <h3>
-                        Recent Transaction
-                    </h3>
+<!-- BANK PAGE -->
 
 
-                    <div id="transactionList">
+<section id="bankPage" style="display:none;">
 
-                        Loading...
 
-                    </div>
+<div class="panel">
 
 
+<h3>
+Bank
+</h3>
 
-                </div>
 
+<div id="bankPageList">
 
+Loading...
 
+</div>
 
-            </section>
 
+</div>
 
 
-        </div>
+</section>
 
 
 
@@ -279,132 +280,166 @@
 
 
 
+<!-- CATEGORY PAGE -->
 
 
+<section id="categoryPage" style="display:none;">
 
 
-        <!-- ========================= -->
-        <!-- BANK PAGE -->
-        <!-- ========================= -->
+<div class="panel">
 
 
-        <section id="bankPage" style="display:none;">
+<h3>
+Category
+</h3>
 
 
+<div id="categoryPageList">
 
-            <div class="panel">
+Loading...
 
+</div>
 
-                <h3>
-                    Bank
-                </h3>
 
+</div>
 
 
-                <div id="bankPageList">
+</section>
 
-                    Loading...
 
-                </div>
 
 
 
-            </div>
 
 
 
-        </section>
 
+<!-- INCOME PAGE -->
 
 
+<section id="incomePage" style="display:none;">
 
 
+<div class="panel finance-form">
 
 
+<h3>
+💵 Tambah Income
+</h3>
 
 
 
+<div class="form-grid">
 
 
 
-        <!-- ========================= -->
-        <!-- BANK DETAIL PAGE -->
-        <!-- ========================= -->
+<div class="form-item">
 
+<label>
+Tanggal
+</label>
 
-        <section id="bankDetailPage" style="display:none;">
+<input 
+type="date"
+id="incomeTanggal"
+>
 
+</div>
 
 
-            <div class="panel">
 
 
 
-                <h3 id="detailBankName">
+<div class="form-item">
 
-                    Bank Detail
+<label>
+Jam
+</label>
 
-                </h3>
+<input 
+type="time"
+id="incomeJam"
+>
 
+</div>
 
 
 
-                <div id="detailBankInfo">
 
-                    Loading...
 
-                </div>
+<div class="form-item">
 
+<label>
+Bank
+</label>
 
+<select id="incomeBank">
 
+<option>
+Pilih Bank
+</option>
 
-            </div>
+</select>
 
+</div>
 
 
 
 
 
+<div class="form-item">
 
+<label>
+Category
+</label>
 
+<select id="incomeCategory">
 
-            <div class="panel">
+<option>
+Pilih Category
+</option>
 
+</select>
 
+</div>
 
-                <h3>
 
-                    Transaction History
 
-                </h3>
 
 
+<div class="form-item">
 
-                <div id="detailTransactionList">
+<label>
+Nominal
+</label>
 
-                    Loading...
+<input
+type="number"
+id="incomeNominal"
+placeholder="Rp 0"
+>
 
-                </div>
+</div>
 
 
 
 
-            </div>
 
+<div class="form-item full">
 
 
+<label>
+Keterangan
+</label>
 
-        </section>
+<input
+type="text"
+id="incomeKeterangan"
+placeholder="Contoh: Gaji Juli"
+>
 
 
-
-
-
-
-
-
-
-    </main>
+</div>
 
 
 
@@ -412,6 +447,170 @@
 
 
 
+
+
+<button 
+id="saveIncomeBtn"
+class="btn-save">
+💾 Simpan Income
+</button>
+
+
+
+
+</div>
+
+
+</section>
+
+
+<section id="expensePage" style="display:none;">
+
+
+<div class="panel finance-form">
+
+
+<h3>
+💸 Tambah Expense
+</h3>
+
+
+<div class="form-grid">
+
+
+
+<div class="form-item">
+
+<label>
+Tanggal
+</label>
+
+<input 
+type="date"
+id="expenseTanggal"
+>
+
+</div>
+
+
+
+<div class="form-item">
+
+<label>
+Jam
+</label>
+
+<input 
+type="time"
+id="expenseJam"
+>
+
+</div>
+
+
+
+
+<div class="form-item">
+
+<label>
+Bank
+</label>
+
+<select id="expenseBank">
+
+<option>
+Pilih Bank
+</option>
+
+</select>
+
+</div>
+
+
+
+
+
+<div class="form-item">
+
+<label>
+Category
+</label>
+
+<select id="expenseCategory">
+
+<option>
+Pilih Category
+</option>
+
+</select>
+
+</div>
+
+
+
+
+
+<div class="form-item">
+
+<label>
+Nominal
+</label>
+
+<input
+type="number"
+id="expenseNominal"
+placeholder="Rp 0"
+>
+
+</div>
+
+
+
+
+
+<div class="form-item full">
+
+<label>
+Keterangan
+</label>
+
+<input
+type="text"
+id="expenseKeterangan"
+placeholder="Contoh: Bayar listrik"
+>
+
+</div>
+
+
+
+</div>
+
+
+
+<button 
+id="saveExpenseBtn"
+class="btn-save">
+💾 Simpan Expense
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+</main>
+
+
+
+</div>
 
 
 
