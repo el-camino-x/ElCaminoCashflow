@@ -71,7 +71,7 @@ TRANSACTION
 </a>
 
 
-<a>
+<a onclick="showPage('transferPage')">
 🔄 Transfer
 </a>
 
@@ -603,7 +603,125 @@ class="btn-save">
 
 
 
+<section id="transferPage" style="display:none;">
 
+<div class="panel finance-form">
+
+<h3>
+🔄 Tambah Transfer
+</h3>
+
+
+<div class="form-grid">
+
+
+<div class="form-item">
+
+<label>
+Tanggal
+</label>
+
+<input 
+type="date"
+id="transferTanggal"
+>
+
+</div>
+
+
+<div class="form-item">
+
+<label>
+Jam
+</label>
+
+<input 
+type="time"
+id="transferJam"
+>
+
+</div>
+
+
+<div class="form-item">
+
+<label>
+Dari Bank
+</label>
+
+<select id="transferDariBank">
+
+<option>
+Pilih Bank
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-item">
+
+<label>
+Ke Bank
+</label>
+
+<select id="transferKeBank">
+
+<option>
+Pilih Bank
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-item">
+
+<label>
+Nominal
+</label>
+
+<input
+type="number"
+id="transferNominal"
+placeholder="Rp 0"
+>
+
+</div>
+
+
+<div class="form-item full">
+
+<label>
+Keterangan
+</label>
+
+<input
+type="text"
+id="transferKeterangan"
+placeholder="Contoh: Pindah saldo"
+>
+
+</div>
+
+
+</div>
+
+
+<button
+id="saveTransferBtn"
+class="btn-save">
+
+💾 Simpan Transfer
+
+</button>
+
+
+</div>
+
+</section>
 
 
 </main>
@@ -615,7 +733,7 @@ class="btn-save">
 
 
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 
 
 </body>
