@@ -26,23 +26,16 @@ renderBanks(data.saldoBank);
 }
 
 function loadTransactions(){
-
 const script=document.createElement("script");
-
 script.src=`${API_URL}?action=getTransactions&callback=handleTransactions`;
-
 document.body.appendChild(script);
-
 }
 
 function handleTransactions(result){
-
 console.log("TRANSACTION",result);
 
 if(result.success){
-
 renderTransactions(result.data);
-
 }
 
 }
@@ -54,33 +47,19 @@ let html="";
 data.slice(0,5).forEach(trx=>{
 
 let icon=trx.Jenis==="Income"?"🟢":"🔴";
-
 let sign=trx.Jenis==="Income"?"+":"-";
 
 html+=`
-
 <div class="transaction-item">
-
 <div>
-
 <b>${icon} ${trx.Keterangan}</b>
-
 <br>
-
 <small>${trx.Bank} • ${trx.Category}</small>
-
 <br>
-
 <small>${trx.Tanggal} ${trx.Jam}</small>
-
 </div>
-
-<strong>
-${sign} ${formatRupiah(trx.Nominal)}
-</strong>
-
+<strong>${sign} ${formatRupiah(trx.Nominal)}</strong>
 </div>
-
 `;
 
 });
@@ -89,7 +68,6 @@ document.getElementById("transactionList").innerHTML=html;
 
 }
 
-
 function renderBanks(data){
 
 let html="";
@@ -97,17 +75,11 @@ let html="";
 data.forEach(bank=>{
 
 html+=`
-
 <div class="bank-item">
-
 <b>🏦 ${bank.Bank}</b>
-
 <br>
-
 ${formatRupiah(bank.Saldo)}
-
 </div>
-
 `;
 
 });
@@ -116,30 +88,23 @@ document.getElementById("bankList").innerHTML=html;
 
 }
 
-
 function loadBanks(){
 
 const script=document.createElement("script");
-
 script.src=`${API_URL}?action=getBanks&callback=handleBanks`;
-
 document.body.appendChild(script);
 
 }
-
 
 function handleBanks(result){
 
 console.log("BANK",result);
 
 if(result.success){
-
 renderBankPage(result.data);
-
 }
 
 }
-
 
 function renderBankPage(data){
 
@@ -148,29 +113,17 @@ let html="";
 data.forEach(bank=>{
 
 html+=`
-
 <div class="bank-item">
-
 <b>🏦 ${bank.Bank}</b>
-
 <br>
-
 Pemilik : ${bank["Nama Pemilik"]}
-
 <br>
-
 Rekening : ${bank["No Rekening"]}
-
 <br>
-
 <button onclick="openBankDetail(${bank.ID})">
-
 Lihat Detail
-
 </button>
-
 </div>
-
 `;
 
 });
@@ -178,7 +131,6 @@ Lihat Detail
 document.getElementById("bankPageList").innerHTML=html;
 
 }
-
 
 function loadCategories(){
 
@@ -190,19 +142,15 @@ document.body.appendChild(script);
 
 }
 
-
 function handleCategories(result){
 
 console.log("CATEGORY",result);
 
 if(result.success){
-
 renderCategoryPage(result.data);
-
 }
 
 }
-
 
 function renderCategoryPage(data){
 
@@ -213,21 +161,13 @@ data.forEach(cat=>{
 let type=cat.Jenis==="Income"?"🟢 Income":"🔴 Expense";
 
 html+=`
-
 <div class="bank-item">
-
 <b>📂 ${cat["Nama Kategori"]}</b>
-
 <br>
-
 ${type}
-
 <br>
-
 Status : ${cat.Status}
-
 </div>
-
 `;
 
 });
@@ -235,7 +175,6 @@ Status : ${cat.Status}
 document.getElementById("categoryPageList").innerHTML=html;
 
 }
-
 
 function showPage(page){
 
@@ -245,60 +184,119 @@ document.getElementById("categoryPage").style.display="none";
 document.getElementById("incomePage").style.display="none";
 document.getElementById("expensePage").style.display="none";
 
-
 if(page==="dashboardPage"){
-
 document.getElementById("dashboardPage").style.display="block";
-
 }
-
 
 if(page==="bankPage"){
-
 document.getElementById("bankPage").style.display="block";
-
 loadBanks();
-
 }
-
 
 if(page==="categoryPage"){
-
 document.getElementById("categoryPage").style.display="block";
-
 loadCategories();
-
 }
-
 
 if(page==="incomePage"){
-
 document.getElementById("incomePage").style.display="block";
-
 setDefaultDateTime();
-
 loadIncomeBanks();
-
 loadIncomeCategories();
-
 }
-
 
 if(page==="expensePage"){
-
 document.getElementById("expensePage").style.display="block";
-
 setDefaultExpenseDateTime();
-
 loadExpenseBanks();
-
 loadExpenseCategories();
+}
+
+}
+
+function openBankDetail(id){
+
+console.log("OPEN BANK DETAIL",id);
+
+const script=document.createElement("script");
+
+script.src=`${API_URL}?action=getBankDetail&id=${id}&callback=handleBankDetail`;
+
+document.body.appendChild(script);
+
+}
+
+function handleBankDetail(result){
+
+console.log("BANK DETAIL",result);
+
+if(result.success){
+
+renderBankDetail(result.data);
 
 }
 
 }
 
+function renderBankDetail(data){
 
+let html=`
+
+<div class="panel">
+
+<h3>🏦 ${data.bank.Nama}</h3>
+
+<p>Pemilik : ${data.bank.Pemilik}</p>
+
+<p>Rekening : ${data.bank.Rekening}</p>
+
+<h3>Saldo : ${formatRupiah(data.saldo)}</h3>
+
+<hr>
+
+<h3>Riwayat Transaksi</h3>
+
+`;
+
+data.transactions.forEach(trx=>{
+
+let icon=trx.Jenis==="Income"?"🟢":"🔴";
+
+html+=`
+
+<div class="transaction-item">
+
+<div>
+
+<b>${icon} ${trx.Jenis}</b>
+
+<br>
+
+<small>${trx.Tanggal} ${trx.Jam}</small>
+
+<br>
+
+${trx.Keterangan}
+
+</div>
+
+<strong>${formatRupiah(trx.Nominal)}</strong>
+
+</div>
+
+`;
+
+});
+
+html+=`
+
+</div>
+
+`;
+
+document.getElementById("bankPageList").innerHTML=html;
+
+}
 
 function loadIncomeBanks(){
 
@@ -310,8 +308,9 @@ document.body.appendChild(script);
 
 }
 
-
 function handleIncomeBanks(result){
+
+console.log("INCOME BANK",result);
 
 if(result.success){
 
@@ -319,7 +318,13 @@ let html="<option value=''>Pilih Bank</option>";
 
 result.data.forEach(bank=>{
 
-html+=`<option value="${bank.ID}">${bank.Bank}</option>`;
+html+=`
+
+<option value="${bank.ID}">
+${bank.Bank}
+</option>
+
+`;
 
 });
 
@@ -328,7 +333,6 @@ document.getElementById("incomeBank").innerHTML=html;
 }
 
 }
-
 
 function loadExpenseBanks(){
 
@@ -340,7 +344,6 @@ document.body.appendChild(script);
 
 }
 
-
 function handleExpenseBanks(result){
 
 console.log("EXPENSE BANK",result);
@@ -351,7 +354,13 @@ let html="<option value=''>Pilih Bank</option>";
 
 result.data.forEach(bank=>{
 
-html+=`<option value="${bank.ID}">${bank.Bank}</option>`;
+html+=`
+
+<option value="${bank.ID}">
+${bank.Bank}
+</option>
+
+`;
 
 });
 
@@ -360,7 +369,6 @@ document.getElementById("expenseBank").innerHTML=html;
 }
 
 }
-
 
 function loadIncomeCategories(){
 
@@ -372,7 +380,6 @@ document.body.appendChild(script);
 
 }
 
-
 function handleIncomeCategories(result){
 
 if(result.success){
@@ -383,7 +390,13 @@ result.data.forEach(cat=>{
 
 if(cat.Jenis==="Income"){
 
-html+=`<option value="${cat.ID}">${cat["Nama Kategori"]}</option>`;
+html+=`
+
+<option value="${cat.ID}">
+${cat["Nama Kategori"]}
+</option>
+
+`;
 
 }
 
@@ -395,7 +408,6 @@ document.getElementById("incomeCategory").innerHTML=html;
 
 }
 
-
 function loadExpenseCategories(){
 
 const script=document.createElement("script");
@@ -405,7 +417,6 @@ script.src=`${API_URL}?action=getCategories&callback=handleExpenseCategories`;
 document.body.appendChild(script);
 
 }
-
 
 function handleExpenseCategories(result){
 
@@ -419,7 +430,13 @@ result.data.forEach(cat=>{
 
 if(cat.Jenis==="Expense"){
 
-html+=`<option value="${cat.ID}">${cat["Nama Kategori"]}</option>`;
+html+=`
+
+<option value="${cat.ID}">
+${cat["Nama Kategori"]}
+</option>
+
+`;
 
 }
 
@@ -430,7 +447,6 @@ document.getElementById("expenseCategory").innerHTML=html;
 }
 
 }
-
 
 function saveTransaction(type){
 
@@ -452,32 +468,40 @@ keterangan:type==="Income"?incomeKeterangan.value:expenseKeterangan.value
 
 };
 
-
 console.log("SAVE DATA",data);
 
+const script=document.createElement("script");
 
-fetch(`${API_URL}?action=addTransaction`,
-{
+script.src=
+`${API_URL}?action=addTransaction`
++
+`&tanggal=${data.tanggal}`
++
+`&jam=${data.jam}`
++
+`&jenis=${data.jenis}`
++
+`&bankID=${data.bankID}`
++
+`&categoryID=${data.categoryID}`
++
+`&nominal=${data.nominal}`
++
+`&keterangan=${encodeURIComponent(data.keterangan)}`
++
+`&callback=handleSaveTransaction`;
 
-method:"POST",
+document.body.appendChild(script);
 
-headers:{
-"Content-Type":"application/json"
-},
+}
 
-body:JSON.stringify(data)
+function handleSaveTransaction(result){
 
-})
-
-.then(res=>res.json())
-
-.then(result=>{
-
-console.log("RESULT SAVE",result);
+console.log("SAVE RESULT",result);
 
 if(result.success){
 
-alert("Berhasil");
+alert("Transaksi berhasil disimpan");
 
 loadDashboard();
 
@@ -485,12 +509,7 @@ loadTransactions();
 
 }
 
-});
-
-
 }
-
-
 
 function setDefaultDateTime(){
 
@@ -502,7 +521,6 @@ incomeJam.value=now.toTimeString().substring(0,5);
 
 }
 
-
 function setDefaultExpenseDateTime(){
 
 const now=new Date();
@@ -513,59 +531,52 @@ expenseJam.value=now.toTimeString().substring(0,5);
 
 }
 
-
 function formatRupiah(number){
 
-return new Intl.NumberFormat("id-ID",
-{
+return new Intl.NumberFormat("id-ID",{
+
 style:"currency",
+
 currency:"IDR",
+
 maximumFractionDigits:0
+
 }).format(number);
 
 }
 
+const incomeBtn=document.getElementById("saveIncomeBtn");
 
-document.addEventListener("DOMContentLoaded",()=>{
+const expenseBtn=document.getElementById("saveExpenseBtn");
 
-const incomeBtn = document.getElementById("saveIncomeBtn");
-const expenseBtn = document.getElementById("saveExpenseBtn");
+console.log("INCOME BTN",incomeBtn);
 
-
-console.log("INCOME BTN:", incomeBtn);
-console.log("EXPENSE BTN:", expenseBtn);
-
+console.log("EXPENSE BTN",expenseBtn);
 
 if(incomeBtn){
 
-    incomeBtn.onclick = function(){
+incomeBtn.onclick=function(){
 
-        console.log("CLICK INCOME");
+console.log("CLICK INCOME");
 
-        saveTransaction("Income");
+saveTransaction("Income");
 
-    };
+};
 
 }
-
-
 
 if(expenseBtn){
 
-    expenseBtn.onclick = function(){
+expenseBtn.onclick=function(){
 
-        console.log("CLICK EXPENSE");
+console.log("CLICK EXPENSE");
 
-        saveTransaction("Expense");
+saveTransaction("Expense");
 
-    };
+};
 
 }
-
 
 loadDashboard();
 
 loadTransactions();
-
-});
-
